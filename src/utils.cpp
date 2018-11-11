@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "utils.hpp"
 
 void print_piece(Piece piece);
 using namespace std;

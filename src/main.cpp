@@ -1,5 +1,5 @@
-#include "board.h"
-#include "utils.h"
+#include "board.hpp"
+#include "utils.hpp"
 
 
 int main(){

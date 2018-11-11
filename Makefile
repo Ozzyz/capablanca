@@ -7,7 +7,7 @@ CCFLAGS  = -g -Wall -Wextra -Werror -Iinclude/
 # the build target executable:
 TARGET = main
 
-src = $(wildcard *.cpp)
+src = $(wildcard src/*.cpp)
 obj = $(src:.cpp=.o)
 
 

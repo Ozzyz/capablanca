@@ -1,6 +1,6 @@
 #pragma once
-#include "utils.h"
-#include "board.h"
+#include "utils.hpp"
+#include "board.hpp"
 #include <string>
 #include <vector>
 using std::string;

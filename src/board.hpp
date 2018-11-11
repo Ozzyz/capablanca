@@ -1,8 +1,8 @@
-#include "utils.h"
+#include "utils.hpp"
 #include <iostream>
 #include <vector>
 #include <string>
-#include "move.h"
+#include "move.hpp"
 
 using std::string;
 using std::vector;

@@ -3,7 +3,7 @@
    This file is responsible for parsing FEN-strings to boards.
    This will be our sole way of initializing given board states (at least for now)
  */
-#include "fen.h"
+#include "fen.hpp"
 using std::cout;
 using std::endl;
 using std::string;

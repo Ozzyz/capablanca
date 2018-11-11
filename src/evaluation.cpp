@@ -1,4 +1,4 @@
-#include "board.h"
+#include "board.hpp"
 /*
 This file evaluates the current chess position by using
 piece-square tables and material count.

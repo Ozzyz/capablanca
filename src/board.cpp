@@ -1,4 +1,4 @@
-#include "board.h"
+#include "board.hpp"
 
 /*
    This is the main core of the chess engine - the board

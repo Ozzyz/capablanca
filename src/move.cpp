@@ -1,4 +1,4 @@
-#include "move.h"
+#include "move.hpp"
 #include <exception>
 Move::Move(unsigned int from, unsigned int to, unsigned int flags) {
     move = (from & 0b111111) | ((to & 0b111111) << 6) | ((flags & 0b111111) << 12);
