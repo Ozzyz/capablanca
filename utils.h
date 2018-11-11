@@ -26,7 +26,14 @@ typedef enum {
 	Empty = 12
 }Piece;
 
+// Define some macros to make it easier in situations where
+// the color of the piece does not matter
 #define PAWN(piece) (piece == 1 || piece == 0)
+#define KNIGHT(piece) (piece == 2 || piece == 3)
+#define BISHOP(piece) (piece == 4 || piece == 5)
+#define ROOK(piece) (piece == 6 || piece == 7)
+#define QUEEN(piece) (piece == 8 || piece == 9)
+#define KING(piece) (piece == 10 || piece == 11)
 #define ROW(x)			(x >> 3)
 #define COL(x)			(x & 7)
 

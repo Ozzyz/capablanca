@@ -92,10 +92,52 @@ int blackSquareMirror[64]{
 	0,1,2,3,4,5,6,7,
 };
 
+int calc_centipawns(int board_idx, Piece cur_piece, Color current_side){
+    // Calculates the centipawn score for the given piece
+    // The score is subtracted if the piece is not of the current side.
+    int centipawns = 0;
+    // If the piece is white and the current side is white
+    bool is_black = cur_piece % 2;
+    bool is_white = !is_black;
+    int modifier = -1;
+    if(is_black && current_side == Black || is_white && current_side == White){
+        modifier = 1;
+    }
+    if(PAWN(cur_piece)){
+        return modifier * pawnSquareEval[board_idx];
+    }
+    if(KNIGHT(cur_piece)){
+        return modifier * knightSquareEval[board_idx];
+    }
+    if(BISHOP(cur_piece)){
+        return modifier * bishopSquareEval[board_idx];
+    }
+    if(ROOK(cur_piece)){
+        return modifier * rookSquareEval[board_idx];
+    }
+    if(QUEEN(cur_piece)){
+        return modifier * queenSquareEval[board_idx];
+    }
+    if(KING(cur_piece)){
+        return modifier * kingSquareEval[board_idx];
+    }
+    return 0;
+}
 
 int eval_board_pos(Piece board[64], int pieceCount[13], Color current_side) {
 	// Iterate through each piece for the side, summing up centipawns for each positioned
-	// piece
+	// piece. 
 	//TODO: Implement this
-	return 0;
+    int centipawns = 0;
+    int board_idx = 0;    
+    for(int i=0;i<64;i++){
+        Piece cur_piece = board[i];
+        if(current_side == Black){
+            board_idx = blackSquareMirror[i];
+        }else{
+            board_idx = i;
+        }
+        centipawns += calc_centipawns(board_idx, cur_piece, current_side); 
+    }
+	return centipawns;
 }
