@@ -58,7 +58,7 @@ class Move {
         string uci();
 
         bool is_promotion();
-
+        Move();
         Move(unsigned int from, unsigned int to, unsigned int flags);
 
         explicit Move(string move_string);
@@ -72,7 +72,7 @@ class Move {
         bool is_capture();
 
         string toString();
-
+        string toAlgebraic();
 };
 
 

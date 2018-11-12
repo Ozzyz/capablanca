@@ -1,5 +1,10 @@
 #include "move.hpp"
 #include <exception>
+
+Move::Move(){
+    move = 0;
+}
+
 Move::Move(unsigned int from, unsigned int to, unsigned int flags) {
     move = (from & 0b111111) | ((to & 0b111111) << 6) | ((flags & 0b111111) << 12);
 }
@@ -44,3 +49,11 @@ string Move::uci() {
 
 string Move::toString() { return "From: " + std::to_string(from_square()) + ", To: " + std::to_string(to_square()) + ", Flags: " + std::to_string(get_flags()); }
 
+string board_index_to_square(int index); 
+
+string Move::toAlgebraic(){
+    if(is_capture()){
+        return board_index_to_square(from_square()) + "x" +  board_index_to_square(to_square());
+    }
+    return board_index_to_square(from_square()) + board_index_to_square(to_square());
+}

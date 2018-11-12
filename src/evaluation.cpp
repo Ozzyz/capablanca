@@ -1,3 +1,4 @@
+#include "evaluation.hpp"
 #include "board.hpp"
 /*
 This file evaluates the current chess position by using
@@ -6,7 +7,7 @@ In order to save arrays, a mirror array is used to index the piece tables for bl
 All 'points' are measured in centipawns.
 */
 
-
+using namespace std;
 // Knights are better in the center, and especially offensive center squares
 int knightSquareEval[64] = {
 	 0, -10,    0,  0,  0,  0, -10,  0,
@@ -96,11 +97,8 @@ int calc_centipawns(int board_idx, Piece cur_piece, Color current_side){
     // Calculates the centipawn score for the given piece
     // The score is subtracted if the piece is not of the current side.
     int centipawns = 0;
-    // If the piece is white and the current side is white
-    bool is_black = cur_piece % 2;
-    bool is_white = !is_black;
-    int modifier = -1;
-    if(is_black && current_side == Black || is_white && current_side == White){
+    int modifier = -1; // Whether or not to count the position of the piece as positive or negative
+    if(cur_piece % 2 == 0 && current_side == White || cur_piece % 2 != 0 && current_side == Black){
         modifier = 1;
     }
     if(PAWN(cur_piece)){
@@ -124,20 +122,41 @@ int calc_centipawns(int board_idx, Piece cur_piece, Color current_side){
     return 0;
 }
 
-int eval_board_pos(Piece board[64], int pieceCount[13], Color current_side) {
+int evaluate(Board &board) {
 	// Iterate through each piece for the side, summing up centipawns for each positioned
 	// piece. 
-	//TODO: Implement this
-    int centipawns = 0;
-    int board_idx = 0;    
+    // Each piece is also summed up to get values for both sides
+    int positional_score = 0;
+    int board_idx = 0;
+    int who2move = 1;
+    int black_piece_values = 0;
+    int white_piece_values = 0;
+    // Piece values irrespective of color (pawn, knight, bishop, rook, queen, king)
+    int piece_values[6] = {1, 3, 3, 5, 9, 100};
+    Color current_side = board.get_to_move();
+    if(current_side == Black){
+        who2move = -1;
+    }
     for(int i=0;i<64;i++){
-        Piece cur_piece = board[i];
+        Piece cur_piece = board.board[i];
+        if(cur_piece == Empty){ continue;}
+        if(cur_piece % 2 == 0){ // curent piece is white
+            //cout << "Value of cur piece " << cur_piece << ": " << piece_values[cur_piece / 2] << endl;
+            white_piece_values += piece_values[cur_piece / 2];
+        }else{
+            //cout << "Value of cur piece " << cur_piece << ". " << piece_values[(cur_piece-1)/2] << endl;
+            black_piece_values += piece_values[(cur_piece - 1)/2];
+        }
+        
         if(current_side == Black){
             board_idx = blackSquareMirror[i];
         }else{
             board_idx = i;
         }
-        centipawns += calc_centipawns(board_idx, cur_piece, current_side); 
+        positional_score += calc_centipawns(board_idx, cur_piece, current_side); 
     }
-	return centipawns;
+    //cout << "info White piece values: " << white_piece_values << endl;
+    //cout << "info Black piece values: " << black_piece_values << endl;
+    //cout << "info Centipawns(positional score): " << positional_score << ", current side: " << current_side << endl;
+	return 100 *(white_piece_values - black_piece_values) * who2move + positional_score;
 }

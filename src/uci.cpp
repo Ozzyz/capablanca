@@ -1,4 +1,3 @@
-#include "board.hpp"
 #include "fen.hpp"
 #include "utils.hpp"
 #include <iostream>
@@ -8,7 +7,12 @@
 using std::cout;
 using std::endl;
 
+Move search_moves(Board &board);
+class Board;
+
+
 void make_uci_move(Move &move) {
+    // Sends the given move to the uci receiver
     cout << "bestmove " << move.uci() << endl;
 }
 
@@ -23,9 +27,9 @@ void parse_move(string move_string, Board &board) {
 void parse_uci_position(string line, Board &board) {
     // The UCI command position is on the form
     // position [fen]
-    // position startposition 
+    // position startposition
     // and both can optionally end with a set of moves, for example e2e3 f7f5 b7b8q
-    //TODO: Implement move info 
+    //TODO: Implement move info
 
     int end_pos = line.find("moves");
     if (line.find("startposition")){
@@ -52,24 +56,29 @@ void parse_uci_position(string line, Board &board) {
 void parse_uci_go(string line, Board &board) {
     // Example format: go wtime 289536 btime 300000 winc 0 binc 0
     // Find all moves
-    vector<Move> moves = generate_all_moves((Color)board.get_to_move(), board);
+    vector<Move> moves = generate_all_moves(board.get_to_move(), board);
     cout << "info choosing best move out of " << moves.size() << "available moves" << endl;
     // Make move (for now, just select the first)
     // TODO: Replace this with call to move search
-    Move chosen_move = moves[0];
+    cout << "Considering " << moves.size() << " moves" << endl;
+    for(auto &move: moves) {
+        cout << "\t " <<  move.toAlgebraic()  << endl;
+    }
+    Move chosen_move = search_moves(board);
+    //Move chosen_move = moves[0];
     // Make the move on the board
-    board.make_move(chosen_move);
+    board.make_move(chosen_move); 
+    print_board(board.board);
     // Return move to UCI engine
     make_uci_move(chosen_move);
 }
 
 void uci_loop(Board &board) {
-    cout << "info entering uci pasrse loop!" << endl;
+    cout << "info entering uci parse loop!" << endl;
     string line;
     // Parse input from GUI
     while (true) {
         std::getline(std::cin, line);
-        cout << "info this is testinfo" << endl;
         if (line.compare(0, 3, "uci") == 0) {
             // Send ready signal and info to the UCI-GUI
             cout << "id name Sisyphus" << endl;
