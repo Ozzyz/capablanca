@@ -1,9 +1,8 @@
 #include "board.hpp"
-#include "utils.hpp"
 #include "uci.hpp"
+#include "utils.hpp"
 
-
-int main(){
+int main() {
     Board board = Board();
     uci_loop(board);
     return 0;

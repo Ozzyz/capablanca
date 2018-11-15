@@ -1,8 +1,9 @@
-#include "utils.hpp"
+#pragma once
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 #include "move.hpp"
+#include "utils.hpp"
 
 using std::string;
 using std::vector;
@@ -13,38 +14,37 @@ static const int H8 = 56;
 static const int A8 = 0;
 static const int H1 = 63;
 
-typedef enum
-{
+typedef enum {
     wCastleKing = 8,
     wCastleQueen = 4,
     bCastleKing = 2,
     bCastleQueen = 1
 } CastlePermissions;
 
-class Board
-{
-  private:
+class Board {
+   private:
     static const int NUM_BOARD_SQUARES = 10 * 12;
     static const int BOARD_SIZE = 64;
     // Square that can be attacked en passant, if viable, else 99
     int ep_square;
     int turn;
     /* Used to keep track over castling rights
-           The two leftmost bits is whether white can castle
-           First is Queenside, then Kingside
-           The same for black (two rightmost bits)
-         */
+             The two leftmost bits is whether white can castle
+             First is Queenside, then Kingside
+             The same for black (two rightmost bits)
+           */
     int castling;
     // Which side to move next
     Color to_move;
 
-  public:
+   public:
     Board();
     Board(string fen);
     Board(const Board &board);
     Piece board[BOARD_SIZE];
     // Each piece number corresponds to the index.
-    //The 13th space is to count number of empty squares (useful for evaluating open/closed positions)
+    // The 13th space is to count number of empty squares (useful for evaluating
+    // open/closed positions)
     int piece_count_list[13] = {0};
     int get_ep_square() const;
     int get_castling_rights() const;
@@ -61,7 +61,8 @@ class Board
     bool is_illegal_state();
 };
 
-static const string starting_fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+static const string starting_fen =
+    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
 extern Piece piece[64];
 extern Piece init_piece[64];

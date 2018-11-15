@@ -1,7 +1,8 @@
 
 /*
    This file is responsible for parsing FEN-strings to boards.
-   This will be our sole way of initializing given board states (at least for now)
+   This will be our sole way of initializing given board states (at least for
+   now)
  */
 #include "fen.hpp"
 using std::cout;
@@ -11,13 +12,12 @@ using std::string;
 int get_castle_permissions(string);
 
 void fill_empty(Piece board[64]) {
-    for (int i = 0; i < 64; i++)
-    {
+    for (int i = 0; i < 64; i++) {
         board[i] = Empty;
     }
 }
 
-void parse_fen(string fen,Board &boardclass) {
+void parse_fen(string fen, Board &boardclass) {
     cout << "info trying to parse fen " + fen << endl;
     int castling = 0;
     Color next_move;
@@ -30,8 +30,7 @@ void parse_fen(string fen,Board &boardclass) {
     fill_empty(pieces);
 
     int fen_pos = 0;
-    for (int i = 0; i < fen.length(); i++)
-    {
+    for (int i = 0; i < fen.length(); i++) {
         fen_pos++;
         /*if (file == 0) {
           rank -= 1;
@@ -39,24 +38,24 @@ void parse_fen(string fen,Board &boardclass) {
         char cur = fen[i];
         Piece pc = Empty;
         if (isdigit(cur)) {
-            // Using the fact that the difference in the chars is the difference of the value they represent
+            // Using the fact that the difference in the chars is the difference
+            // of the value they represent
             int num_empties = cur - '0';
             file -= num_empties;
             count += num_empties;
         }
         // Encountered new row
-        else if(cur == '/'){
+        else if (cur == '/') {
             // Reset file counter
             file = 7;
             rank--;
         }
 
-        else if (count >= 64){
+        else if (count >= 64) {
             // Finished parsing pieces
             boardclass.set_board(pieces);
             break;
-        }
-        else {
+        } else {
             switch (cur) {
                 case 'p':
                     pc = bPawn;
@@ -116,13 +115,13 @@ void parse_fen(string fen,Board &boardclass) {
     std::vector<string> args;
     while ((pos = fen.find(delimiter)) != std::string::npos) {
         token = fen.substr(0, pos);
-        std::cout << "info " <<pos << "Token " << token << std::endl;
+        std::cout << "info " << pos << "Token " << token << std::endl;
         args.push_back(token);
         fen.erase(0, pos + delimiter.length());
     }
     try {
         next_move = args[0].compare("w") == 0 ? White : Black;
-        //Castling
+        // Castling
         castling = get_castle_permissions(args[1]);
         // En passant
         ep_square = args[2].compare("-") ? square_to_board_index(args[2]) : -99;
@@ -131,8 +130,7 @@ void parse_fen(string fen,Board &boardclass) {
         boardclass.set_castling_rights(castling);
         boardclass.set_to_move(next_move);
         boardclass.set_ep_square(ep_square);
-    }
-    catch(int e){
+    } catch (int e) {
         std::cout << "info: Could not parse fen! ";
         return;
     }
@@ -140,8 +138,7 @@ void parse_fen(string fen,Board &boardclass) {
 
 int get_castle_permissions(string castle_descriptor) {
     int castling = 0;
-    for (int i = 0; i < castle_descriptor.length(); i++)
-    {
+    for (int i = 0; i < castle_descriptor.length(); i++) {
         char cur = castle_descriptor[i];
         switch (cur) {
             case 'k':
@@ -162,4 +159,3 @@ int get_castle_permissions(string castle_descriptor) {
     }
     return castling;
 }
-

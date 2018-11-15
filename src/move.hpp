@@ -7,8 +7,8 @@ using std::string;
    From lowest to highest:
    6 bit - From square
    6 bit - To square
-   4 bit - Special moves (pawn promotion, where each bit is promote to {Knight, Bishop, Rook, Queen}
-   Table for the last 4 bits:
+   4 bit - Special moves (pawn promotion, where each bit is promote to {Knight,
+Bishop, Rook, Queen} Table for the last 4 bits:
 
 0000 : quiet moves (No captures or promotions)
 0001 : double pawn push (Move two squares from initial pawn position)
@@ -28,8 +28,6 @@ using std::string;
 1111 : Queen promotion capture
  */
 
-
-
 typedef enum {
     Quiet = 0,
     DoublePawn = 1,
@@ -45,34 +43,36 @@ typedef enum {
     BishopPromoCapture = 13,
     RookPromoCapture = 14,
     QueenPromoCapture = 15
-}MoveType;
+} MoveType;
 
 class Move {
-    protected:
-        unsigned short move;
-    public:
+   protected:
+    unsigned short move;
 
-        bool operator==(Move a) const { return (move & 0xffff) == (a.move & 0xffff); }
-        bool operator!=(Move a) const { return (move & 0xffff) != (a.move & 0xffff); }
+   public:
+    bool operator==(Move a) const {
+        return (move & 0xffff) == (a.move & 0xffff);
+    }
+    bool operator!=(Move a) const {
+        return (move & 0xffff) != (a.move & 0xffff);
+    }
 
-        string uci();
+    string uci();
 
-        bool is_promotion();
-        Move();
-        Move(unsigned int from, unsigned int to, unsigned int flags);
+    bool is_promotion();
+    Move();
+    Move(unsigned int from, unsigned int to, unsigned int flags);
 
-        explicit Move(string move_string);
+    explicit Move(string move_string);
 
-        unsigned int from_square();
+    unsigned int from_square();
 
-        unsigned int to_square();
+    unsigned int to_square();
 
-        unsigned int get_flags();
+    unsigned int get_flags();
 
-        bool is_capture();
+    bool is_capture();
 
-        string toString();
-        string toAlgebraic();
+    string toString();
+    string toAlgebraic();
 };
-
-
