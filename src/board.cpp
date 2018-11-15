@@ -52,6 +52,8 @@ bool Board::make_move(Move &move) {
     // Makes the given move on the board, update piece count for
     // captures/promotions Returns true if the move is legal and applied, else
     // false
+
+    // TODO: Check if the move is king or rook. If it is, deny castling rights
     Piece moved = board[move.from_square()];
     board[move.from_square()] = Empty;
     board[move.to_square()] = moved;
@@ -217,9 +219,14 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
     vector<Move> moves;
     // Reverse attacking direction if black
     int mod = current_side == Black ? -1 : 1;
+    int king_square = 0;
     for (int i = 0; i < 64; i++) {
         if (is_color(board.board[i], current_side)) {
             Piece pc = board.board[i];
+            if (KING(pc)) {
+                king_square = i;
+            }
+            // Pawn moves
             if (PAWN(pc)) {
                 // TODO: Check en passant
                 // Regular pawn captures (that may lead to promotion)
@@ -231,7 +238,6 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
                     is_color(board.board[(i + 9 * mod)], opponent_color)) {
                     generate_move(i, i + 9 * mod, Capture, moves);
                 }
-                // Pawn moves
 
                 // One step forward
                 if (board.board[i + 8 * mod] == Empty) {
@@ -248,7 +254,9 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
                      i <= 15 && is_color(pc, White))) {
                     generate_move(i, i + 2 * 8 * mod, DoublePawn, moves);
                 }
-            } else {
+            }
+            // Other moves (knights, bishops, rooks, queen, king)
+            else {
                 // Look at available moves for each piece. Check if it is within
                 // bounds
                 int piece_type = pc >> 1;
@@ -280,6 +288,39 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
                     }
                 }
             }
+        }
+    }
+    // Add castling moves for the current side
+    // Note that we do not check whether or not the king or rook has moved -
+    // this is checked in Board::make_move.
+    if (current_side == White) {
+        bool kingSideEmpty =
+            board.board[F1] == Empty && board.board[G1] == Empty;
+        bool queenSideEmpty = board.board[B1] == Empty &&
+                              board.board[C1] == Empty &&
+                              board.board[D1] == Empty;
+        if (board.get_castling_rights() & wCastleKing && kingSideEmpty) {
+            // In order to castle king side, the squares between the king and
+            // rook have to be Empty
+            generate_move(WHITE_KING_START, G1, KCastle, moves);
+        } else if (board.get_castling_rights() & wCastleQueen &&
+                   queenSideEmpty) {
+            generate_move(WHITE_KING_START, C1, QCastle, moves);
+        }
+    }  // Black castling
+    else {
+        bool kingSideEmpty =
+            board.board[F8] == Empty && board.board[G8] == Empty;
+        bool queenSideEmpty = board.board[B8] == Empty &&
+                              board.board[C8] == Empty &&
+                              board.board[D8] == Empty;
+        if (board.get_castling_rights() & bCastleKing && kingSideEmpty) {
+            // In order to castle king side, the squares between the king and
+            // rook have to be Empty
+            generate_move(BLACK_KING_START, G8, KCastle, moves);
+        } else if (board.get_castling_rights() & bCastleQueen &&
+                   queenSideEmpty) {
+            generate_move(BLACK_KING_START, C1, QCastle, moves);
         }
     }
     return moves;
