@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12)
 project(capablanca)
 set(CMAKE_CXX_STANDARD 14)
 
@@ -43,6 +43,8 @@ file(GLOB all_SRCs
         "${PROJECT_SOURCE_DIR}/src/communication/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/evaluation/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/evaluation/*.cpp"
+        "${PROJECT_SOURCE_DIR}/src/hashing/*.hpp"
+        "${PROJECT_SOURCE_DIR}/src/hashing/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/utils/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/utils/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/*.hpp"
@@ -56,15 +58,18 @@ file(GLOB all_SRCs_TEST
         "${PROJECT_SOURCE_DIR}/src/communication/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/evaluation/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/evaluation/*.cpp"
+        "${PROJECT_SOURCE_DIR}/tests/*.cpp"
         "${PROJECT_SOURCE_DIR}/src/hashing/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/hashing/*.cpp"
-        "${PROJECT_SOURCE_DIR}/src/utils/*.hpp"
         "${PROJECT_SOURCE_DIR}/src/utils/*.cpp"
+        "${PROJECT_SOURCE_DIR}/src/utils/*.hpp"
         )
 
-add_executable(capablanca ${all_SRCs} tests/boardtest.cpp tests/main.cpp)
-add_executable(capablanca_test ${all_SRCs_TEST} tests/boardtest.cpp tests/fentest.cpp)
+enable_testing()
+add_executable(capablanca ${all_SRCs})
+add_executable(capablanca_test ${all_SRCs_TEST})
 # Now simply link against gtest or gtest_main as needed. Eg
 target_link_libraries(capablanca_test gtest_main)
-add_test(NAME boardtest COMMAND capablanca_test)
+add_test(UnitTests capablanca_test)
 include_directories(${PROJECT_SOURCE_DIR}/src)
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/.travis/cmake)
