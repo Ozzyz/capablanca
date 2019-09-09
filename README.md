@@ -1,4 +1,4 @@
-# capablanca
+# capablanca [![Build Status](https://travis-ci.com/Ozzyz/capablanca.svg?branch=master)](https://travis-ci.com/Ozzyz/capablanca)
 An attempt to create a simple chess engine in c++.
 
 ## Why?
