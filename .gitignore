@@ -31,4 +31,7 @@
 *.out
 *.app
 
+
+# Compilation with cmake
 cmake-build-debug/
+bin/
