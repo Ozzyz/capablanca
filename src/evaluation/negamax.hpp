@@ -2,5 +2,5 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "board.hpp"
+#include "../board/board.hpp"
 #include "evaluation.hpp"

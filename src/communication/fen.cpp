@@ -18,7 +18,7 @@ void fill_empty(Piece board[64]) {
 }
 
 void parse_fen(string fen, Board &boardclass) {
-    cout << "info trying to parse fen " + fen << endl;
+    //cout << "info trying to parse fen " + fen << endl;
     int castling = 0;
     Color next_move;
     int ep_square;
@@ -115,7 +115,7 @@ void parse_fen(string fen, Board &boardclass) {
     std::vector<string> args;
     while ((pos = fen.find(delimiter)) != std::string::npos) {
         token = fen.substr(0, pos);
-        std::cout << "info " << pos << "Token " << token << std::endl;
+        //std::cout << "info " << pos << "Token " << token << std::endl;
         args.push_back(token);
         fen.erase(0, pos + delimiter.length());
     }
@@ -131,7 +131,7 @@ void parse_fen(string fen, Board &boardclass) {
         boardclass.set_to_move(next_move);
         boardclass.set_ep_square(ep_square);
     } catch (int e) {
-        std::cout << "info: Could not parse fen! ";
+        //std::cout << "info: Could not parse fen! ";
         return;
     }
 }

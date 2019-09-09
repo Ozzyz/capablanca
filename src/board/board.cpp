@@ -3,7 +3,7 @@
 /*
    This is the main core of the chess engine - the board
    This board is using a 10x12 layout (see
-   https://chessprogramming.wikispaces.com/10x12+Board) White pieces start at
+    ) White pieces start at
    index 0 (top)
  */
 

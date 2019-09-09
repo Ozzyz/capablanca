@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "move.hpp"
-#include "utils.hpp"
+#include "../utils/utils.hpp"
 
 using std::string;
 using std::vector;
@@ -21,9 +21,11 @@ static const int H8 = 56;
 static const int B1 = 6;
 static const int C1 = 5;
 static const int D1 = 4;
-static const int H1 = 0;
-static const int G1 = 1;
+static const int E1 = 3;
 static const int F1 = 2;
+static const int G1 = 1;
+static const int H1 = 0;
+
 
 static const int WHITE_KING_START = 3;
 static const int BLACK_KING_START = E8;
@@ -40,7 +42,7 @@ class Board {
     static const int NUM_BOARD_SQUARES = 10 * 12;
     static const int BOARD_SIZE = 64;
     // Square that can be attacked en passant, if viable, else 99
-    int ep_square;
+    int ep_square = -99;
     int turn;
     /* Used to keep track over castling rights
              The two leftmost bits is whether white can castle

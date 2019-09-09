@@ -1,5 +1,5 @@
 #include "negamax.hpp"
-#include "board_hash.hpp"
+#include "hashing/board_hash.hpp"
 
 using namespace std;
 int MAX_DEPTH = 4;
@@ -21,9 +21,9 @@ int negamax(Board &board, int alpha, int beta, int depth,
     // If the board value has been calculated already, return the previous
     // calculated score
     uint64_t board_hash = hasher.hash(board);
-    map<uint64_t, int>::iterator it = board_hashes.find(board_hash);
+    auto it = board_hashes.find(board_hash);
     if (it != board_hashes.end()) {
-        int score = board_hashes.at(board_hash);
+        score = board_hashes.at(board_hash);
         // cout << "info Found hash for board " << board_hash << " " << score <<
         // endl;
         return score;

@@ -1,8 +1,8 @@
 #pragma once
 #include <cmath>
 #include <random>
-#include "board.hpp"
-#include "utils.hpp"
+#include "board/board.hpp"
+#include "utils/utils.hpp"
 
 class Zobrist {
    private:

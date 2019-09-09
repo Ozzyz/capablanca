@@ -1,5 +1,5 @@
 #include "evaluation.hpp"
-#include "board.hpp"
+#include "../board/board.hpp"
 /*
 This file evaluates the current chess position by using
 piece-square tables and material count.

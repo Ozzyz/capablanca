@@ -2,9 +2,9 @@
 #include <map>
 #include <sstream>
 #include <string>
-#include "board_hash.hpp"
+#include "hashing/board_hash.hpp"
 #include "fen.hpp"
-#include "utils.hpp"
+#include "../utils/utils.hpp"
 using std::cout;
 using std::endl;
 
@@ -28,7 +28,7 @@ void parse_uci_position(string line, Board &board) {
     // position [fen]
     // position startposition
     // and both can optionally end with a set of moves, for example e2e3 f7f5
-    // b7b8q
+    // b7b8q (Promote to queen on the b8 square)
     // TODO: Implement move info
 
     int end_pos = line.find("moves");

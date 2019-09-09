@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 using std::string;
-#include "utils.hpp"
+#include "../utils/utils.hpp"
 /*
    The move is represented by a 16-bit field
    From lowest to highest:
