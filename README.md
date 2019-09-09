@@ -7,7 +7,6 @@ I am a fan of chess and programming, and this project is a perfect mix between t
 ## TODO:
 - Implement opening book and endgame books
 - Create lichess bot
-- Add continuous integration
 - Increase test coverage
 ## In progress
 - UCI-conformity (http://wbec-ridderkerk.nl/html/UCIProtocol.html)
