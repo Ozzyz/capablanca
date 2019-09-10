@@ -131,6 +131,7 @@ int evaluate(Board &board) {
     // Iterate through each piece for the side, summing up centipawns for each
     // positioned piece.
     // Each piece is also summed up to get values for both sides
+    // The returned score is thus relative to whose turn it is.
     int positional_score = 0;
     int board_idx = 0;
     int who2move = 1;
@@ -165,10 +166,10 @@ int evaluate(Board &board) {
         }
         positional_score += calc_centipawns(board_idx, cur_piece, current_side);
     }
-    //cout << "info White piece values: " << white_piece_values << endl;
-    //cout << "info Black piece values: " << black_piece_values << endl;
-    //cout << "info Centipawns(positional score): " << positional_score <<
-    //" current side: " << current_side << endl;
+    cout << "info White piece values: " << white_piece_values << endl;
+    cout << "info Black piece values: " << black_piece_values << endl;
+    cout << "info Centipawns(positional score): " << positional_score <<
+    " current side: " << current_side << endl;
     return 100 * (white_piece_values - black_piece_values) * who2move +
            positional_score;
 }

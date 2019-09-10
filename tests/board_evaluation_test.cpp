@@ -10,7 +10,7 @@ TEST(BoardEvaluation, StartPositionWhiteHasRookOddsIsBadForWhite){
     Board board = Board();
     parse_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/1NBQKBNR w Kkq - 0 1", board);
     int score = evaluate(board);
-    EXPECT_LE(0, score);
+    EXPECT_GE(0, score);
 }
 
 
@@ -23,9 +23,10 @@ TEST(BoardEvaluation, StartPositionWhiteHasRookOddsIsGoodForBlack){
 
 TEST(BoardEvaluation, PositionWhereBlackIsUnderdevelopedIsBadForBlack){
     Board board = Board();
+    // This position is black's turn, so the score should be negative
     parse_fen("r1bq1b1r/pp1ppk2/n1p2ppn/7p/2PP1B2/2NBPN1P/PP3PP1/R2QK2R b K - 0 1", board);
     int score = evaluate(board);
-    EXPECT_LE(0, score);
+    EXPECT_GE(0, score);
 }
 
 
