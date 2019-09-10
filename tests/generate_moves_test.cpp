@@ -29,7 +29,7 @@ TEST_F(GeneratedMovesTest, VerifyAllGeneratedWhiteMovesInPosition){
             // king moves
             "e1e2", "e1f1", "e1g1"
             };
-    vector<Move> moves = generate_all_moves(White, board);
+    vector<Move> moves = generate_all_moves(board);
     ASSERT_EQ(white_moves.size(), moves.size()) << "Number of generated moves not equal";
     for(auto move: moves){
         string uci_move = move.uci();
@@ -53,7 +53,7 @@ TEST_F(GeneratedMovesTest, VerifyAllGeneratedBlackMovesInPosition){
             // king moves
             "e8e7", "e8f8", "e8g8"
     };
-    vector<Move> moves = generate_all_moves(Black, board);
+    vector<Move> moves = generate_all_moves(board);
     ASSERT_EQ(black_moves.size(), moves.size()) << "Number of generated moves not equal";
     for(auto move: moves){
         string uci_move = move.uci();

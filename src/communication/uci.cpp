@@ -16,14 +16,14 @@ void make_uci_move(Move &move) {
     cout << "bestmove " << move.uci() << endl;
 }
 
-void parse_move(string move_string, Board &board) {
+void parse_move(const string& move_string, Board &board) {
     cout << "info parsing move string " << move_string << endl;
     Move move = Move(move_string);
     cout << "info created move " << move.toString() << endl;
     board.make_move(move);
 }
 
-void parse_uci_position(string line, Board &board) {
+void parse_uci_position(const string& line, Board &board) {
     // The UCI command position is on the form
     // position [fen]
     // position startposition
@@ -53,16 +53,16 @@ void parse_uci_position(string line, Board &board) {
     }
 }
 
-void parse_uci_go(string line, Board &board,
+void parse_uci_go(const string& line, Board &board,
                   std::map<uint64_t, int> board_hashes, Zobrist hasher) {
     // Example format: go wtime 289536 btime 300000 winc 0 binc 0
     // Find all moves
-    vector<Move> moves = generate_all_moves(board.get_to_move(), board);
+    vector<Move> moves = generate_all_moves(board);
     cout << "info choosing best move out of " << moves.size()
          << "available moves" << endl;
     // Make move (for now, just select the first)
     // TODO: Replace this with call to move search
-    cout << "Considering " << moves.size() << " moves" << endl;
+    cout << "info Considering " << moves.size() << " moves" << endl;
     for (auto &move : moves) {
         cout << "\t " << move.toAlgebraic() << endl;
     }

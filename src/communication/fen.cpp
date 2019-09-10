@@ -131,7 +131,7 @@ void parse_fen(string fen, Board &boardclass) {
         boardclass.set_to_move(next_move);
         boardclass.set_ep_square(ep_square);
     } catch (int e) {
-        //std::cout << "info: Could not parse fen! ";
+        std::cerr << "info: Could not parse fen! ";
         return;
     }
 }

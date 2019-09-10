@@ -67,7 +67,7 @@ file(GLOB all_SRCs_TEST
 
 enable_testing()
 add_executable(capablanca ${all_SRCs})
-add_executable(capablanca_test ${all_SRCs_TEST} tests/ucitest.cpp tests/board_moves_test.cpp tests/generate_moves_test.cpp tests/castling_test.cpp)
+add_executable(capablanca_test ${all_SRCs_TEST} tests/ucitest.cpp tests/board_moves_test.cpp tests/generate_moves_test.cpp tests/castling_test.cpp tests/board_evaluation_test.cpp)
 # Now simply link against gtest or gtest_main as needed. Eg
 target_link_libraries(capablanca_test gtest_main)
 add_test(UnitTests capablanca_test)

@@ -74,7 +74,7 @@ class Board {
     // open/closed positions)
     int piece_count_list[13] = {0};
     int get_ep_square() const;
-    int get_castling_rights() const;
+    unsigned int get_castling_rights() const;
     Color get_to_move() const;
     int get_turn() const;
     void set_turn(int turn);
@@ -101,5 +101,5 @@ void init_board();
 bool is_attacked(int square, Color color);
 bool is_color(Piece piece, Color color);
 
-vector<Move> generate_all_moves(Color, Board &);
+vector<Move> generate_all_moves(Board &);
 void generate_move(int from, int to, int flags, vector<Move> &);

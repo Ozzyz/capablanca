@@ -37,7 +37,7 @@ void print_piece(Piece pc) {
 
 int square_to_board_index(string square) {
     if (square.length() != 2) {
-        throw std::invalid_argument("Cant convert - Illegal square!");
+        throw std::invalid_argument("Cant convert square " + square + " as it does not satisfy the expected format.");
     }
     string files = "hgfedcba";
     string ranks = "12345678";

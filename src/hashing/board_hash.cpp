@@ -20,7 +20,7 @@ std::uint64_t Zobrist::random_bitstring() {
 }
 
 Zobrist::Zobrist() {
-    // Initialize the hash board
+    // Initial  ize the hash board
     for (int i = 0; i < 64; i++) {
         for (int j = 0; j < 12; j++) {
             hash_board[i][j] = random_bitstring();

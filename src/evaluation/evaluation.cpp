@@ -102,8 +102,8 @@ int calc_centipawns(int board_idx, Piece cur_piece, Color current_side) {
     int centipawns = 0;
     int modifier = -1;  // Whether or not to count the position of the piece as
                         // positive or negative
-    if (cur_piece % 2 == 0 && current_side == White ||
-        cur_piece % 2 != 0 && current_side == Black) {
+    if ((cur_piece % 2 == 0 && current_side == White) ||
+        (cur_piece % 2 != 0 && current_side == Black)) {
         modifier = 1;
     }
     if (PAWN(cur_piece)) {
@@ -165,10 +165,10 @@ int evaluate(Board &board) {
         }
         positional_score += calc_centipawns(board_idx, cur_piece, current_side);
     }
-    // cout << "info White piece values: " << white_piece_values << endl;
-    // cout << "info Black piece values: " << black_piece_values << endl;
-    // cout << "info Centipawns(positional score): " << positional_score << ",
-    // current side: " << current_side << endl;
+    //cout << "info White piece values: " << white_piece_values << endl;
+    //cout << "info Black piece values: " << black_piece_values << endl;
+    //cout << "info Centipawns(positional score): " << positional_score <<
+    //" current side: " << current_side << endl;
     return 100 * (white_piece_values - black_piece_values) * who2move +
            positional_score;
 }

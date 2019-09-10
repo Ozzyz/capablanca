@@ -28,7 +28,7 @@ Board::Board(const Board &other) {
 
 int Board::get_ep_square() const { return ep_square; }
 
-int Board::get_castling_rights() const { return castling; }
+unsigned int Board::get_castling_rights() const { return castling; }
 
 Color Board::get_to_move() const { return to_move; }
 
@@ -266,11 +266,12 @@ bool is_attacked(int square, Color atk_color) {
     return false;
 }
 
-vector<Move> generate_all_moves(Color current_side, Board &board) {
+vector<Move> generate_all_moves(Board &board) {
     // Add all possible pseudomoves (include illegal moves, for example that the
     // moves puts the moving color in check)
     // TODO: Castling moves
     // TODO: Dont calculate this each round, maybe use some delta-algorithm?
+    Color current_side = board.get_to_move();
     Color opponent_color = current_side ^ 1;
 
     vector<Move> moves;
@@ -298,8 +299,7 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
 
                 // One step forward
                 if (board.board[i + 8 * mod] == Empty) {
-                    // TODO: What should we pass in as flag? May be promotion or
-                    // normal step
+                    // TODO: What should we pass in as flag? May be promotion or normal step
                     generate_move(i, i + 8 * mod, Quiet, moves);
                 }
                 // Two steps forward
@@ -307,8 +307,8 @@ vector<Move> generate_all_moves(Color current_side, Board &board) {
                 // the pawns are at the starting row
                 if (board.board[i + 8 * mod] == Empty &&
                     board.board[i + 2 * 8 * mod] == Empty &&
-                    (i >= 48 && is_color(pc, Black) ||
-                     i <= 15 && is_color(pc, White))) {
+                    ((i >= 48 && is_color(pc, Black)) ||
+                     (i <= 15 && is_color(pc, White)))) {
                     generate_move(i, i + 2 * 8 * mod, DoublePawn, moves);
                 }
             }

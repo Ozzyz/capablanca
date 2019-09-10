@@ -7,7 +7,7 @@
 class Zobrist {
    private:
     // Mersenne twister for random number generation
-    std::uint64_t hash_board[64][12];
+    std::uint64_t hash_board[64][12]{};
     std::uint64_t random_bitstring();
 
    public:
