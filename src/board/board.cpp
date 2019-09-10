@@ -57,6 +57,57 @@ bool Board::make_move(Move &move) {
     Piece moved = board[move.from_square()];
     board[move.from_square()] = Empty;
     board[move.to_square()] = moved;
+    if(moved == wKing){
+        if(move.from_square() == E1 && move.to_square() == G1){
+            // Move rook from H1 to F1
+            board[H1] = Empty;
+            board[F1] = wRook;
+        }
+        if(move.from_square() == E1 && move.to_square() == C1){
+            // Move white rook from A1 to D1
+            board[A1] = Empty;
+            board[D1] = wRook;
+        }
+    }
+    if(moved == bKing){
+        if(move.from_square() == E8 && move.to_square() == G8){
+            // Move rook from H8 to F8
+            board[H8] = Empty;
+            board[F8] = bRook;
+        }
+        if(move.from_square() == E8 && move.to_square() == C8){
+            // Move white rook from A8 to D8
+            board[A8] = Empty;
+            board[D8] = bRook;
+        }
+    }
+
+    if(moved == wKing){
+        // Remove all white castling rights
+        unsetCastlingRights(wCastleQueen);
+        unsetCastlingRights(wCastleKing);
+    }
+    if(moved == bKing){
+        unsetCastlingRights(bCastleQueen);
+        unsetCastlingRights(bCastleKing);
+    }
+    if(move.from_square() == A1 && moved == wRook){
+        // Even though this will be true for all times we move a rook from
+        // A1, it is true the first time it happens, and that is what matters
+        unsetCastlingRights(wCastleQueen);
+    }
+    if(move.from_square() == H1 && moved == wRook){
+        unsetCastlingRights(wCastleKing);
+    }
+    if(move.from_square() == A8 && moved == bRook){
+        // Even though this will be true for all times we move a rook from
+        // A1, it is true the first time it happens, and that is what matters
+        unsetCastlingRights(bCastleQueen);
+    }
+    if(move.from_square() == H8 && moved == bRook){
+        unsetCastlingRights(bCastleKing);
+    }
+
     if (is_illegal_state()) {
         // Reverse the move
         board[move.from_square()] = moved;
@@ -66,6 +117,12 @@ bool Board::make_move(Move &move) {
     to_move = to_move ^ 1;
     update_piece_count_list(move);
     return true;
+}
+
+void Board::unsetCastlingRights(CastlePermissions permission){
+    // Castling permissions are controlled by 1 bit each, in total 4 bits.
+    // Therefore, remove all
+    castling &= (~permission & 0xF);
 }
 
 void Board::update_piece_count_list(Move &move) {

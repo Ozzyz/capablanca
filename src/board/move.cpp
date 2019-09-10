@@ -9,7 +9,7 @@ Move::Move(unsigned int from, unsigned int to, unsigned int flags) {
 }
 
 Move::Move(string move_string) {
-    // Assume every move is on the form e2e4 or b7b8Q
+    // Assume every move is on the form e2e4 or g1f3
     if (move_string.length() < 4) {
         std::cout << "info Could not parse move string\n";
     }
@@ -33,6 +33,7 @@ bool Move::is_capture() { return get_flags() == Capture; }
 bool Move::is_promotion() { return get_flags() & 0b1000; }
 
 string Move::uci() {
+    // TODO: Include captures/promotions
     return board_index_to_square(from_square()) +
            board_index_to_square(to_square());
 }
@@ -45,11 +46,34 @@ string Move::toString() {
 
 string board_index_to_square(int index);
 
+char get_promotion_suffix(unsigned int flags){
+    if(flags == KnightPromo || flags == KnightPromoCapture){
+        return 'N';
+    }
+    if(flags == QueenPromo || flags == QueenPromoCapture){
+        return 'Q';
+    }
+    if(flags == RookPromo || flags == RookPromoCapture){
+        return 'R';
+    }
+    if(flags == BishopPromo || flags == BishopPromoCapture){
+        return 'B';
+    }
+    return ' ';
+
+}
+
 string Move::toAlgebraic() {
+    string modifier = "";
+
     if (is_capture()) {
-        return board_index_to_square(from_square()) + "x" +
-               board_index_to_square(to_square());
+        modifier = "x";
+    }
+    string promotion_suffix = "";
+    if(is_promotion()){
+        promotion_suffix = get_promotion_suffix(get_flags());
     }
     return board_index_to_square(from_square()) +
-           board_index_to_square(to_square());
+           board_index_to_square(to_square()) + promotion_suffix;
 }
+

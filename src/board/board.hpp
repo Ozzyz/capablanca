@@ -22,9 +22,19 @@ static const int B1 = 6;
 static const int C1 = 5;
 static const int D1 = 4;
 static const int E1 = 3;
+static const int E2 = 11;
+static const int E3 = 19;
+static const int E4 = 27;
+static const int E5 = 35;
+static const int E6 = 43;
+static const int E7 = 51;
 static const int F1 = 2;
 static const int G1 = 1;
 static const int H1 = 0;
+static const int F3 = 18;
+static const int F6 = 42;
+static const int C3 = 21;
+static const int C6 = 45;
 
 
 static const int WHITE_KING_START = 3;
@@ -52,6 +62,7 @@ class Board {
     int castling;
     // Which side to move next
     Color to_move;
+    void unsetCastlingRights(CastlePermissions permissions);
 
    public:
     Board();
